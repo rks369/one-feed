@@ -24,7 +24,13 @@ compose.desktop {
             packageName = "OneFeed"
             packageVersion = "1.0.0"
 
-            windows { iconFile.set(project.file("icons/icon.ico")) }
+            windows {
+                iconFile.set(project.file("icons/icon.ico"))
+                menu = true
+                shortcut = true
+                menuGroup = "One Feed"
+                upgradeUuid = "3904560e-c34d-418b-a68c-be5749d5e6b6"
+            }
             macOS { iconFile.set(project.file("icons/icon.icns")) }
             linux { iconFile.set(project.file("icons/icon.png")) }
         }
