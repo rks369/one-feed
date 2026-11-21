@@ -6,6 +6,8 @@ One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatfo
 
 **Live demo:** [one-feed.onrender.com](https://one-feed.onrender.com/) · [web app](https://one-feed.onrender.com/app/)
 
+**Download:** [latest release](https://github.com/rks369/one-feed/releases/latest) with the Android APK, Windows installer and portable zip
+
 ## What it does
 
 - Shows NYT top stories by section in Compose Multiplatform
@@ -13,6 +15,72 @@ One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatfo
 - Light, dark and system theme
 - Ktor server that keeps the API key off the clients and stores stories in PostgreSQL
 - Server-rendered HTML pages with section tabs, for search engines
+
+## Screenshots
+
+### Android
+
+<p align="center">
+  <img src="docs/screenshots/android-home-light.jpg" width="300" alt="Top stories on Android, light theme">
+  <img src="docs/screenshots/android-home-dark.jpg" width="300" alt="Top stories on Android, dark theme">
+</p>
+<p align="center"><sub>Top stories · light and dark</sub></p>
+
+<p align="center">
+  <img src="docs/screenshots/android-saved-light.jpg" width="300" alt="Saved stories on Android, light theme">
+  <img src="docs/screenshots/android-saved-dark.jpg" width="300" alt="Saved stories on Android, dark theme">
+</p>
+<p align="center"><sub>Saved tab · light and dark</sub></p>
+
+### Desktop
+
+<p align="center">
+  <img src="docs/screenshots/desktop-light.jpg" width="100%" alt="Desktop app, light theme">
+  <br><sub>Top stories · light</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/desktop-dark.jpg" width="100%" alt="Desktop app, dark theme">
+  <br><sub>Top stories · dark</sub>
+</p>
+
+In a narrow window the same app switches to the phone layout:
+
+<p align="center">
+  <img src="docs/screenshots/desktop-narrow-light.jpg" width="300" alt="Desktop app in a narrow window, light theme">
+  <img src="docs/screenshots/desktop-narrow-dark.jpg" width="300" alt="Desktop app in a narrow window, dark theme">
+</p>
+<p align="center"><sub>Narrow window · light and dark</sub></p>
+
+### Web app
+
+<p align="center">
+  <img src="docs/screenshots/web-app-light.jpg" width="100%" alt="Web app, light theme">
+  <br><sub>Top stories · light</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/web-app-saved-dark.jpg" width="100%" alt="Web app saved stories, dark theme">
+  <br><sub>Saved tab · dark</sub>
+</p>
+
+### Server-rendered page
+
+<p align="center">
+  <img src="docs/screenshots/web-seo-desktop-light.jpg" width="100%" alt="Server-rendered top stories page, light theme">
+  <br><sub>Desktop width · light</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/web-seo-desktop-dark.jpg" width="100%" alt="Server-rendered top stories page, dark theme">
+  <br><sub>Desktop width · dark</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/web-seo-mobile-light.jpg" width="300" alt="Server-rendered World page on a phone, light theme">
+  <img src="docs/screenshots/web-seo-mobile-dark.jpg" width="300" alt="Server-rendered World page on a phone, dark theme">
+</p>
+<p align="center"><sub>Phone width · light and dark</sub></p>
 
 ## How it works
 
