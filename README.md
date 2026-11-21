@@ -83,19 +83,6 @@ On Render: choose **New → Blueprint**, pick this repository (`render.yaml` set
 
 Elsewhere: run the image with `NYT_API_KEY` and `DATABASE_URL` set. `PORT` is optional and defaults to 8080.
 
-## Known limitations
-
-- The demo runs on a free hosting tier, so the first request after a quiet period can take up to a minute.
-- Bookmarks are stored on the device only. On the web they are kept in memory and lost on reload.
-- There is no published iOS build; building one needs Xcode on a Mac.
-
-## Roadmap
-
-- Tests for the server cache and story store
-- Automated builds of the Android APK and desktop installers
-- A connection pool for faster database access
-- A published iOS build
-
 ## Tech
 
 Kotlin, Compose Multiplatform, Ktor (client and server), kotlinx.serialization, SQLDelight (SQLite on devices, PostgreSQL on the server), kotlinx.html, Docker.
