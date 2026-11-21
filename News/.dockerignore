@@ -1,0 +1,12 @@
+**/build/
+.gradle/
+.kotlin/
+.idea/
+*.iml
+**/node_modules/
+local.properties
+server/local.properties
+app/iosApp/
+**/.DS_Store
+Dockerfile
+.dockerignore

@@ -1,0 +1,34 @@
+CREATE TABLE IF NOT EXISTS article (
+    section TEXT NOT NULL,
+    url TEXT NOT NULL,
+    position INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT,
+    byline TEXT,
+    article_section TEXT,
+    published_date TEXT,
+    thumbnail_url TEXT,
+    PRIMARY KEY (section, url)
+);
+
+CREATE TABLE IF NOT EXISTS section_fetch (
+    section TEXT PRIMARY KEY,
+    fetched_at BIGINT NOT NULL
+);
+
+selectArticles:
+SELECT * FROM article WHERE section = ? ORDER BY position;
+
+selectFetchedAt:
+SELECT fetched_at FROM section_fetch WHERE section = ?;
+
+deleteArticles:
+DELETE FROM article WHERE section = ?;
+
+insertArticle:
+INSERT INTO article (section, url, position, title, summary, byline, article_section, published_date, thumbnail_url)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+upsertFetchedAt:
+INSERT INTO section_fetch (section, fetched_at) VALUES (?, ?)
+ON CONFLICT (section) DO UPDATE SET fetched_at = EXCLUDED.fetched_at;

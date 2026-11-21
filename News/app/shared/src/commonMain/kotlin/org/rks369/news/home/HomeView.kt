@@ -229,7 +229,7 @@ fun SectionTabs(
                 modifier = Modifier.clickable { onSelect(section) }
             ) {
                 Text(
-                    text = section.title ?: section.key.orEmpty(),
+                    text = section.title,
                     style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )

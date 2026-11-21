@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,36 +8,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.serialization)
     alias(libs.plugins.sqldelight)
-}
-
-// Secrets are read from local.properties (gitignored) or an env var for CI,
-// never hardcoded in tracked source. See local.properties.example.
-val localProperties = Properties().apply {
-    val localPropertiesFile = rootProject.file("local.properties")
-    if (localPropertiesFile.exists()) {
-        localPropertiesFile.inputStream().use { load(it) }
-    }
-}
-val nytApiKey: String =
-    (localProperties.getProperty("NYT_API_KEY") ?: System.getenv("NYT_API_KEY") ?: "")
-        .also {
-            if (it.isBlank()) {
-                logger.warn("NYT_API_KEY is not set. Add it to local.properties (see local.properties.example) or set the NYT_API_KEY environment variable.")
-            }
-        }
-
-val generatedSecretsDir = layout.buildDirectory.dir("generated/secrets").get().asFile
-generatedSecretsDir.resolve("org/rks369/news/secrets").apply {
-    mkdirs()
-    resolve("Secrets.kt").writeText(
-        """
-        package org.rks369.news.secrets
-
-        internal object Secrets {
-            const val NYT_API_KEY: String = "$nytApiKey"
-        }
-        """.trimIndent()
-    )
 }
 
 kotlin {
@@ -74,20 +43,9 @@ kotlin {
        androidResources {
            enable = true
        }
-       withHostTest {
-           isIncludeAndroidResources = true
-       }
-       withDeviceTestBuilder {
-           sourceSetTreeName = "test"
-       }.configure {
-           instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-       }
     }
     
     sourceSets {
-        commonMain.configure {
-            kotlin.srcDir(generatedSecretsDir)
-        }
         commonMain.dependencies {
             api(project(":core"))
             implementation(libs.compose.runtime)
@@ -109,17 +67,9 @@ kotlin {
             implementation(libs.sqldelight.coroutines.extensions)
             implementation(libs.kotlinx.datetime)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
 
-        // multiplatform-settings-no-arg publishes for android/ios/jvm/js but not wasmJs.
-        // Rather than restructuring the default source set hierarchy, each of those four
-        // source sets just also compiles the one shared KeyValueStore.kt file directly.
         val settingsSharedDir = "src/settingsShared/kotlin"
 
-        // SQLDelight driver artifacts only publish for android/ios/jvm. js/wasmJs share an
-        // in-memory BookmarkRepository actual instead (see bookmarksInMemoryDir below).
         val bookmarksSqlDir = "src/bookmarksSql/kotlin"
         val bookmarksInMemoryDir = "src/bookmarksInMemory/kotlin"
 

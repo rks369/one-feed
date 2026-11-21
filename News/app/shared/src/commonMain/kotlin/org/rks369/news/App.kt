@@ -42,8 +42,6 @@ private enum class AppDestination(val label: String) {
     }
 }
 
-// Material's compact/medium width class breakpoint: below this the nav lives
-// in a bottom bar, at or above it the nav shifts to a rail on the left.
 private val WideScreenBreakpoint = 600.dp
 
 @Composable

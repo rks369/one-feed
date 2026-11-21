@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: kmp-news
+    runtime: docker
+    plan: free
+    rootDir: News
+    healthCheckPath: /health
+    envVars:
+      - key: NYT_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
