@@ -2,6 +2,8 @@
 
 One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatform learning project: a news reader backed by a small Ktor server that fetches the New York Times Top Stories API and saves the stories in a PostgreSQL database.
 
+**Live demo:** [one-feed.onrender.com](https://one-feed.onrender.com/) · [web app](https://one-feed.onrender.com/app/)
+
 ## What it does
 
 - Shows NYT top stories by section in Compose Multiplatform

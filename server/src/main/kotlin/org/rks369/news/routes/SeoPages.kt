@@ -39,7 +39,7 @@ import org.rks369.news.home.data.Section
 import org.rks369.news.home.data.Sections
 import org.rks369.news.util.formatPublishedDate
 
-private const val SITE_NAME = "OneFeed"
+private const val SITE_NAME = "One Feed"
 
 fun Route.seoRoutes(cache: TopStoriesCache, config: ServerConfig) {
     staticResources("/static", "static") {

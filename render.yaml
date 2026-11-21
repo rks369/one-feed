@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: onefeed
+    name: one-feed
     runtime: docker
     plan: free
     # Same region as the database (AWS us-east-1)

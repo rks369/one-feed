@@ -25,10 +25,6 @@ SELECT fetched_at FROM section_fetch WHERE section = ?;
 deleteArticles:
 DELETE FROM article WHERE section = ?;
 
-insertArticle:
-INSERT INTO article (section, url, position, title, summary, byline, article_section, published_date, thumbnail_url)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-
 upsertFetchedAt:
 INSERT INTO section_fetch (section, fetched_at) VALUES (?, ?)
 ON CONFLICT (section) DO UPDATE SET fetched_at = EXCLUDED.fetched_at;

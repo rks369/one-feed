@@ -1,5 +1,6 @@
 package org.rks369.news.db
 
+import app.cash.sqldelight.driver.jdbc.JdbcPreparedStatement
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -34,25 +35,41 @@ class StoryStore(databaseUrl: String) {
     }
 
     suspend fun save(section: String, articles: List<Article>) = withContext(Dispatchers.IO) {
+        val rows = articles.distinctBy { it.url }
         queries.transaction {
             queries.deleteArticles(section)
-            articles.distinctBy { it.url }.forEachIndexed { index, article ->
-                queries.insertArticle(
-                    section = section,
-                    url = article.url!!,
-                    position = index,
-                    title = article.title,
-                    summary = article.abstract,
-                    byline = article.byline,
-                    article_section = article.section,
-                    published_date = article.publishedDate,
-                    thumbnail_url = article.thumbnailUrl,
-                )
-            }
+            if (rows.isNotEmpty()) insertArticles(section, rows)
             queries.upsertFetchedAt(section, System.currentTimeMillis())
         }
     }
+
+    // One multi-row INSERT instead of one per article: each statement is a network round trip.
+    private fun insertArticles(section: String, rows: List<Article>) {
+        val placeholders = rows.joinToString(", ") { ROW_PLACEHOLDERS }
+        driver.execute(
+            null,
+            "INSERT INTO article (section, url, position, title, summary, byline, article_section, published_date, thumbnail_url) VALUES $placeholders",
+            rows.size * COLUMNS,
+        ) {
+            check(this is JdbcPreparedStatement)
+            rows.forEachIndexed { index, article ->
+                var parameter = index * COLUMNS
+                bindString(parameter++, section)
+                bindString(parameter++, article.url!!)
+                bindInt(parameter++, index)
+                bindString(parameter++, article.title)
+                bindString(parameter++, article.abstract)
+                bindString(parameter++, article.byline)
+                bindString(parameter++, article.section)
+                bindString(parameter++, article.publishedDate)
+                bindString(parameter, article.thumbnailUrl)
+            }
+        }
+    }
 }
+
+private const val COLUMNS = 9
+private val ROW_PLACEHOLDERS = List(COLUMNS) { "?" }.joinToString(", ", "(", ")")
 
 private fun dataSource(databaseUrl: String): PGSimpleDataSource {
     val uri = URI(databaseUrl.removePrefix("jdbc:"))
