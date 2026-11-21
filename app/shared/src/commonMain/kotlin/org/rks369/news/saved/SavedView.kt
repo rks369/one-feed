@@ -43,6 +43,7 @@ fun SavedView(
                     title = bookmark.title,
                     abstract = bookmark.abstract,
                     thumbnailUrl = bookmark.thumbnailUrl,
+                    url = bookmark.url,
                     section = bookmark.section,
                     publishedDate = bookmark.publishedDate,
                     isBookmarked = true,

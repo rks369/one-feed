@@ -42,9 +42,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -146,6 +150,7 @@ fun HomeView(
                                 title = article.title,
                                 abstract = article.abstract,
                                 thumbnailUrl = article.thumbnailUrl,
+                                url = article.url,
                                 section = article.section,
                                 publishedDate = article.publishedDate,
                                 isBookmarked = article.url != null && article.url in bookmarkedUrls,
@@ -244,14 +249,25 @@ fun ArticleListItem(
     title: String,
     abstract: String?,
     thumbnailUrl: String?,
+    url: String?,
     section: String?,
     publishedDate: String?,
     isBookmarked: Boolean,
     onToggleBookmark: () -> Unit,
 ) {
+    val uriHandler = LocalUriHandler.current
+    val cardShape = RoundedCornerShape(12.dp)
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(cardShape)
+            .then(
+                if (url == null) Modifier
+                else Modifier
+                    .pointerHoverIcon(PointerIcon.Hand)
+                    .clickable { runCatching { uriHandler.openUri(url) } }
+            ),
+        shape = cardShape,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
         )

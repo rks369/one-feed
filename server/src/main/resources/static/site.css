@@ -26,6 +26,7 @@ h1 { font-size:2rem; margin:8px 0 16px; }
 
 .story { padding:16px 0; border-bottom:1px solid var(--line); }
 .story img { width:100%; height:auto; border-radius:8px; }
+.story .thumb { display:block; }
 .story h2 { font-size:1.3rem; margin:8px 0 4px; }
 .story h2 a { color:var(--fg); text-decoration:none; }
 .meta { color:var(--muted); font:0.85rem system-ui, sans-serif; display:flex; gap:12px; flex-wrap:wrap; }

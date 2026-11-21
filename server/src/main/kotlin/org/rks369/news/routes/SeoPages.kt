@@ -162,15 +162,20 @@ private fun HTML.page(
 private fun FlowContent.articleCard(article: Article) {
     article(classes = "story") {
         article.thumbnailUrl?.let { src ->
-            img(src = src, alt = article.title) {
-                attributes["loading"] = "lazy"
-                attributes["width"] = "440"
-                attributes["height"] = "293"
+            if (article.url != null) {
+                a(href = article.url, target = "_blank", classes = "thumb") {
+                    attributes["rel"] = "noopener"
+                    attributes["tabindex"] = "-1"
+                    attributes["aria-hidden"] = "true"
+                    storyImage(src, article.title)
+                }
+            } else {
+                storyImage(src, article.title)
             }
         }
         h2 {
             if (article.url != null) {
-                a(href = article.url) {
+                a(href = article.url, target = "_blank") {
                     attributes["rel"] = "noopener"
                     +article.title
                 }
@@ -185,6 +190,14 @@ private fun FlowContent.articleCard(article: Article) {
                 time { attributes["datetime"] = article.publishedDate.orEmpty(); +formatted }
             }
         }
+    }
+}
+
+private fun FlowContent.storyImage(src: String, title: String) {
+    img(src = src, alt = title) {
+        attributes["loading"] = "lazy"
+        attributes["width"] = "440"
+        attributes["height"] = "293"
     }
 }
 
