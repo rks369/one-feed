@@ -1,6 +1,6 @@
-# KMP News
+# OneFeed
 
-A Kotlin Multiplatform learning project: a news reader for Android, iOS, Desktop and Web, backed by a small Ktor server that fetches the New York Times Top Stories API and saves the stories in Postgres.
+One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatform learning project: a news reader backed by a small Ktor server that fetches the New York Times Top Stories API and saves the stories in Postgres.
 
 ## What it does
 
@@ -29,28 +29,27 @@ When a section is requested, the server checks Postgres:
 ## Project layout
 
 ```
-KMP-Showcase/
-├── render.yaml          Render deployment
-└── News/
-    ├── core/            Code shared by the apps and the server (Article, Sections, AppException)
-    ├── server/          Ktor server: API, Postgres, HTML pages
-    ├── app/
-    │   ├── shared/      Compose UI, ViewModels, repositories
-    │   ├── androidApp/
-    │   ├── iosApp/
-    │   ├── desktopApp/
-    │   └── webApp/
-    └── Dockerfile
+onefeed/
+├── core/            Code shared by the apps and the server (Article, Sections, AppException)
+├── server/          Ktor server: API, Postgres, HTML pages
+├── app/
+│   ├── shared/      Compose UI, ViewModels, repositories
+│   ├── androidApp/
+│   ├── iosApp/
+│   ├── desktopApp/
+│   └── webApp/
+├── render.yaml      Render deployment
+└── Dockerfile
 ```
 
 ## Running locally
 
 You need JDK 17+, a Postgres database (local, or free from [Neon](https://neon.tech) / [Supabase](https://supabase.com)) and a free NYT key from [developer.nytimes.com](https://developer.nytimes.com/).
 
-1. Copy `News/server/local.properties.example` to `News/server/local.properties` and fill in `NYT_API_KEY` and `DATABASE_URL`.
-2. For Android, copy `News/local.properties.example` to `News/local.properties` and set `sdk.dir`.
+1. Copy `server/local.properties.example` to `server/local.properties` and fill in `NYT_API_KEY` and `DATABASE_URL`.
+2. For Android, copy `local.properties.example` to `local.properties` and set `sdk.dir`.
 
-From `News/`:
+From the repository root:
 
 | Target | Command |
 |---|---|
@@ -58,7 +57,7 @@ From `News/`:
 | Web | `./gradlew :app:webApp:wasmJsBrowserDistribution`, then run the server and open http://localhost:8080/app/ |
 | Android | `./gradlew :app:androidApp:installDebug` (talks to `10.0.2.2:8080`) |
 | Desktop | `./gradlew :app:desktopApp:run` (talks to `localhost:8080`) |
-| iOS | Open `News/app/iosApp/iosApp.xcodeproj` in Xcode |
+| iOS | Open `app/iosApp/iosApp.xcodeproj` in Xcode |
 
 Release builds talk to `RELEASE_API_BASE_URL` in `app/shared/src/commonMain/kotlin/org/rks369/news/network/ApiConfig.kt`.
 
