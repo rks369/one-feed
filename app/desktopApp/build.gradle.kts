@@ -30,3 +30,7 @@ compose.desktop {
         }
     }
 }
+
+tasks.withType<JavaExec>().configureEach {
+    if (name == "run") systemProperty("news.apiBaseUrl", "http://localhost:8080")
+}

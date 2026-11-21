@@ -1,6 +1,7 @@
 package org.rks369.news
 
 import io.ktor.client.network.sockets.ConnectTimeoutException
+import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.ServerResponseException
@@ -38,6 +39,7 @@ sealed class AppException(
 fun Throwable.toAppException() : AppException {
     return when (this) {
         is HttpRequestTimeoutException,
+        is SocketTimeoutException,
         is ConnectTimeoutException -> AppException.Timeout()
         is ServerResponseException,
         is ClientRequestException -> AppException.ServerError()

@@ -2,6 +2,7 @@ package org.rks369.news.home.data
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
@@ -11,6 +12,11 @@ import org.rks369.news.network.apiBaseUrl
 class NewsRepository(
     private val httpClient: HttpClient = HttpClient {
         expectSuccess = true
+        install(HttpTimeout) {
+            connectTimeoutMillis = 30_000
+            requestTimeoutMillis = 90_000
+            socketTimeoutMillis = 90_000
+        }
         install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true })
         }
