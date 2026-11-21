@@ -1,13 +1,13 @@
 # OneFeed
 
-One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatform learning project: a news reader backed by a small Ktor server that fetches the New York Times Top Stories API and saves the stories in Postgres.
+One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatform learning project: a news reader backed by a small Ktor server that fetches the New York Times Top Stories API and saves the stories in a PostgreSQL database.
 
 ## What it does
 
 - Shows NYT top stories by section in Compose Multiplatform
 - Saves bookmarks on the device with SQLDelight (in memory on web)
 - Light, dark and system theme
-- Ktor server that keeps the API key off the clients and stores stories in Postgres
+- Ktor server that keeps the API key off the clients and stores stories in PostgreSQL
 - Server-rendered HTML pages with section tabs, for search engines
 
 ## How it works
@@ -16,7 +16,7 @@ One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatfo
 flowchart LR
     apps["Android / iOS / Desktop / Web"] --> server["Ktor server"]
     browsers["Browsers"] --> server
-    server --> db[("Postgres")]
+    server --> db[("PostgreSQL")]
     server --> nyt["NYT API"]
 ```
 
@@ -44,9 +44,9 @@ onefeed/
 
 ## Running locally
 
-You need JDK 17+, a Postgres database (local, or free from [Neon](https://neon.tech) / [Supabase](https://supabase.com)) and a free NYT key from [developer.nytimes.com](https://developer.nytimes.com/).
+You need JDK 17+, a PostgreSQL database (local or hosted) and a free NYT key from [developer.nytimes.com](https://developer.nytimes.com/).
 
-1. Copy `server/local.properties.example` to `server/local.properties` and fill in `NYT_API_KEY` and `DATABASE_URL`.
+1. Copy `server/local.properties.example` to `server/local.properties` and fill in `NYT_API_KEY` and `DATABASE_URL`. For a hosted database, use the host, user and password from your provider (see the example file).
 2. For Android, copy `local.properties.example` to `local.properties` and set `sdk.dir`.
 
 From the repository root:
@@ -71,14 +71,17 @@ Release builds talk to `RELEASE_API_BASE_URL` in `app/shared/src/commonMain/kotl
 | `/` and `/section/{key}` | HTML pages |
 | `/app/` | The web app |
 
-## Deploying to Render
+## Deploying
 
-1. In Render choose **New → Blueprint** and pick this repository (`render.yaml` sets everything up).
-2. Set `NYT_API_KEY` and `DATABASE_URL` when asked.
+The `Dockerfile` builds the web app and the server into one image, so any host that can run a container will do. The demo currently runs on Render with a PostgreSQL database on TiDB Cloud.
+
+On Render: choose **New → Blueprint**, pick this repository (`render.yaml` sets everything up) and set `NYT_API_KEY` and `DATABASE_URL` when asked.
+
+Elsewhere: run the image with `NYT_API_KEY` and `DATABASE_URL` set. `PORT` is optional and defaults to 8080.
 
 ## Tech
 
-Kotlin, Compose Multiplatform, Ktor (client and server), kotlinx.serialization, SQLDelight (SQLite on devices, PostgreSQL on the server), kotlinx.html, Docker, Render.
+Kotlin, Compose Multiplatform, Ktor (client and server), kotlinx.serialization, SQLDelight (SQLite on devices, PostgreSQL on the server), kotlinx.html, Docker.
 
 ## Credits
 

@@ -1,2 +1,5 @@
 NYT_API_KEY=your_key_here
+# Local PostgreSQL
 DATABASE_URL=jdbc:postgresql://localhost:5432/news?user=postgres&password=postgres
+# Hosted PostgreSQL: use the host, user and password from your provider
+# DATABASE_URL=jdbc:postgresql://<host>:5432/<database>?user=<user>&password=<password>&sslmode=require

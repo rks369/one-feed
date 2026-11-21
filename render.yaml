@@ -3,6 +3,8 @@ services:
     name: onefeed
     runtime: docker
     plan: free
+    # Same region as the database (AWS us-east-1)
+    region: virginia
     healthCheckPath: /health
     envVars:
       - key: NYT_API_KEY
