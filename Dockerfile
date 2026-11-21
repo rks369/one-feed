@@ -1,5 +1,7 @@
 FROM azul/zulu-openjdk:21 AS build
 WORKDIR /src
+# The Node binary Gradle downloads for the Kotlin/Wasm build needs libatomic.
+RUN apt-get update && apt-get install -y --no-install-recommends libatomic1 && rm -rf /var/lib/apt/lists/*
 COPY . .
 RUN sed -i 's/\r$//' gradlew && chmod +x gradlew && \
     ./gradlew --no-daemon :app:webApp:wasmJsBrowserDistribution :server:installDist
