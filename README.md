@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/branding/logo.svg" alt="One Feed logo" width="120"></p>
+
 # One Feed
 
 One Kotlin codebase, news on Android, iOS, desktop and web. A Kotlin Multiplatform learning project: a news reader backed by a small Ktor server that fetches the New York Times Top Stories API and saves the stories in a PostgreSQL database.

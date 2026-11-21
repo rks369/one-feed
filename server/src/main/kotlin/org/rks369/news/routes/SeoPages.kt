@@ -46,6 +46,8 @@ fun Route.seoRoutes(cache: TopStoriesCache, config: ServerConfig) {
         cacheControl { listOf(CacheControl.MaxAge(maxAgeSeconds = 3600, visibility = CacheControl.Visibility.Public)) }
     }
 
+    get("/favicon.ico") { call.respondRedirect("/static/favicon.ico", permanent = true) }
+
     get("/") {
         val home = Sections.byKey(Sections.DEFAULT_KEY)!!
         call.respondSectionPage(cache, config, home, path = "/", isHome = true)
@@ -135,15 +137,25 @@ private fun HTML.page(
         meta { attributes["property"] = "og:site_name"; this.content = SITE_NAME }
         meta { attributes["property"] = "og:title"; this.content = title }
         meta { attributes["property"] = "og:description"; this.content = description }
-        ogImage?.let { image -> meta { attributes["property"] = "og:image"; this.content = image } }
+        meta { attributes["property"] = "og:image"; this.content = ogImage ?: (config.publicBaseUrl + "/static/og-default.png") }
+        meta(name = "twitter:card", content = "summary_large_image")
         meta(name = "color-scheme", content = "light dark")
+        link(rel = "icon", href = "/static/favicon.svg", type = "image/svg+xml")
+        link(rel = "icon", href = "/static/favicon.ico") { attributes["sizes"] = "32x32" }
+        link(rel = "apple-touch-icon", href = "/static/apple-touch-icon.png")
         link(rel = "stylesheet", href = "/static/site.css")
         script(src = "/static/site.js") { defer = true }
     }
     body {
         header(classes = "site-header") {
             div(classes = "bar") {
-                a(href = "/", classes = "brand") { +SITE_NAME }
+                a(href = "/", classes = "brand") {
+                    img(src = "/static/favicon.svg", alt = "") {
+                        attributes["width"] = "28"
+                        attributes["height"] = "28"
+                    }
+                    +SITE_NAME
+                }
                 a(href = "/app/", classes = "cta") { +"Open the app →" }
             }
             sectionTabs(currentSection)

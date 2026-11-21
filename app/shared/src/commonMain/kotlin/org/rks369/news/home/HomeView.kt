@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -56,6 +57,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import onefeed.app.shared.generated.resources.Res
+import onefeed.app.shared.generated.resources.logo
 import onefeed.app.shared.generated.resources.nyt_logo
 import org.jetbrains.compose.resources.painterResource
 import org.rks369.news.asyncSnapshotBuilder.AsyncSnapshotBuilder
@@ -86,6 +88,11 @@ fun HomeView(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                Image(
+                    painter = painterResource(Res.drawable.logo),
+                    contentDescription = "One Feed logo",
+                    modifier = Modifier.size(32.dp)
+                )
                 Image(
                     painter = painterResource(Res.drawable.nyt_logo),
                     contentDescription = "NYT logo",
