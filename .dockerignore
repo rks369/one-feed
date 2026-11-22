@@ -10,3 +10,9 @@ app/iosApp/
 **/.DS_Store
 Dockerfile
 .dockerignore
+keystore.properties
+**/*.jks
+**/*.keystore
+key-store/
+one-feed-release/
+one-feed-screenshots-originals/
